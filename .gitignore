@@ -30,3 +30,19 @@
 *.exe
 *.out
 *.app
+
+# CMake
+/*build*/
+CMakeCache.txt
+CMakeFiles
+CMakeLists.txt.user*
+cmake_install.cmake
+CPackConfig.cmake
+CPackSourceConfig.cmake
+DartConfiguration.tcl
+
+# vscode
+.vscode/
+
+# data
+*.dat
