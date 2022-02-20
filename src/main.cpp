@@ -1,5 +1,8 @@
-#include <iostream>
+#include "../test/utils_test.h"
 
-int main(int, char**) {
-    std::cout << "Hello, world!\n";
+
+int main(int, char**) 
+{
+    TestUtils();
+    return 0;
 }
