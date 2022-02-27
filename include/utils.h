@@ -55,6 +55,7 @@ class ActionArray
         size_t Size() const { return size; }
         void Append(const Action& act) { actions[size++] = act; }
         const Action& operator[](int i) const { return actions[i]; }
+        void SetActions(Action* handle) { memcpy(handle, actions, size * sizeof(Action)); }
 
     private:
         Action actions[NUM_STONES];

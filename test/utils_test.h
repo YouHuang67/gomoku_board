@@ -45,7 +45,7 @@ static void TestConversionOfAction()
 
 static void TestActionArray()
 {
-    Action _actions[2];
+    Action _actions[3];
     _actions[0] = Action(7, 7);
     _actions[1] = Action(7, 8);
     ActionArray actions(_actions, 2), assignedActions;
@@ -54,6 +54,10 @@ static void TestActionArray()
     EXPECT_EQ_INT(static_cast<Uint>(Action(7, 8)), static_cast<Uint>(actions[1]));
     EXPECT_EQ_INT(2, assignedActions.Size());
     EXPECT_EQ_INT(static_cast<Uint>(Action(7, 8)), static_cast<Uint>(assignedActions[1]));
+    actions.Append(Action(7, 9));
+    actions.SetActions(_actions);
+    EXPECT_EQ_INT(3, actions.Size());
+    EXPECT_EQ_INT(static_cast<Uint>(Action(7, 9)), static_cast<Uint>(actions[2]));
 }
 
 
