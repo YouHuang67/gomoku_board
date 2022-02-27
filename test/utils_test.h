@@ -43,22 +43,24 @@ static void TestConversionOfAction()
 }
 
 
-static void TestActionSet()
+static void TestActionArray()
 {
-    LineActionArray actions;
-    actions.Append(Action(7, 7));
-    actions.Append(Action(7, 8));
+    Action _actions[2];
+    _actions[0] = Action(7, 7);
+    _actions[1] = Action(7, 8);
+    ActionArray actions(_actions, 2), assignedActions;
+    assignedActions = actions;
     EXPECT_EQ_INT(2, actions.Size());
     EXPECT_EQ_INT(static_cast<Uint>(Action(7, 8)), static_cast<Uint>(actions[1]));
-    actions.Reset();
-    EXPECT_EQ_INT(0, actions.Size());
+    EXPECT_EQ_INT(2, assignedActions.Size());
+    EXPECT_EQ_INT(static_cast<Uint>(Action(7, 8)), static_cast<Uint>(assignedActions[1]));
 }
 
 
 static void TestUtils()
 {
     TestConversionOfAction();
-    TestActionSet();
+    TestActionArray();
     printf("utils_test: %d/%d (%3.2f%%) passed\n", testPass, testCount, testPass * 100.0 / testCount);
 }
 

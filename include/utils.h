@@ -33,24 +33,44 @@ struct Action
 };
 
 
-template<size_t N>
+inline std::ostream& operator<<(std::ostream& os, const Action& action)
+{
+    os << "(" << action.row << ", " << action.col << ")";
+	return os;
+}
+
+
 class ActionArray
 {
     public:
-        void Reset() { size = 0; }
+        ActionArray() {}
+        ActionArray(const Action* acts, size_t s) 
+        { memcpy(actions, acts, (size = s) * sizeof(Action)); }
+        ActionArray& operator=(const ActionArray& array)
+        { 
+            memcpy(actions, array.actions, (size = array.size) * sizeof(Action)); 
+            return *this;
+        }
+        ActionArray(const ActionArray& array) { *this = array; }
         size_t Size() const { return size; }
         void Append(const Action& act) { actions[size++] = act; }
         const Action& operator[](int i) const { return actions[i]; }
 
     private:
-        Action actions[N];
+        Action actions[NUM_STONES];
         size_t size = 0;
 
 };
 
 
-typedef ActionArray<SIZE> LineActionArray;
-typedef ActionArray<NUM_STONES> BoardActionArray;
+inline std::ostream& operator<<(std::ostream& os, const ActionArray& array)
+{
+    size_t size = array.Size();
+    os << size << " actions:";
+    for (int i = 0; i < size; i++)
+        os << " " << array[i];
+    return os;
+}
 
 
 #endif
