@@ -55,9 +55,10 @@ static void TestActionArray()
     EXPECT_EQ_INT(2, assignedActions.Size());
     EXPECT_EQ_INT(static_cast<Uint>(Action(7, 8)), static_cast<Uint>(assignedActions[1]));
     actions.Append(Action(7, 9));
-    actions.SetActions(_actions);
     EXPECT_EQ_INT(3, actions.Size());
     EXPECT_EQ_INT(static_cast<Uint>(Action(7, 9)), static_cast<Uint>(actions[2]));
+    actions.SetActions(_actions);
+    EXPECT_EQ_INT(static_cast<Uint>(Action(7, 9)), static_cast<Uint>(_actions[2]));
 }
 
 
