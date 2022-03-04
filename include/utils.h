@@ -40,6 +40,8 @@ inline std::ostream& operator<<(std::ostream& os, const Action& action)
 }
 
 
+// implement action array that scores a set of actions
+template<size_t maxSize>
 class ActionArray
 {
     public:
@@ -58,13 +60,14 @@ class ActionArray
         void SetActions(Action* handle) { memcpy(handle, actions, size * sizeof(Action)); }
 
     private:
-        Action actions[NUM_STONES];
+        Action actions[maxSize];
         size_t size = 0;
 
 };
 
 
-inline std::ostream& operator<<(std::ostream& os, const ActionArray& array)
+template<size_t maxSize>
+inline std::ostream& operator<<(std::ostream& os, const ActionArray<maxSize>& array)
 {
     size_t size = array.Size();
     os << size << " actions:";
@@ -73,5 +76,8 @@ inline std::ostream& operator<<(std::ostream& os, const ActionArray& array)
     return os;
 }
 
+
+typedef ActionArray<SIZE> LineActionArray;
+typedef ActionArray<NUM_STONES> BoardActionArray;
 
 #endif

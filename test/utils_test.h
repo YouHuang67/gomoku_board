@@ -48,7 +48,7 @@ static void TestActionArray()
     Action _actions[3];
     _actions[0] = Action(7, 7);
     _actions[1] = Action(7, 8);
-    ActionArray actions(_actions, 2), assignedActions;
+    LineActionArray actions(_actions, 2), assignedActions;
     assignedActions = actions;
     EXPECT_EQ_INT(2, actions.Size());
     EXPECT_EQ_INT(static_cast<Uint>(Action(7, 8)), static_cast<Uint>(actions[1]));
