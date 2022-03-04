@@ -78,7 +78,6 @@ inline std::ostream& operator<<(std::ostream& os, const Array<T, maxSize>& array
 }
 
 
-typedef Array<Item, SIZE> LineItemArray;
 typedef Array<Action, SIZE> LineActionArray;
 typedef Array<Action, NUM_STONES> BoardActionArray;
 

@@ -43,17 +43,6 @@ static void TestConversionOfAction()
 }
 
 
-static void TestItemArray()
-{
-    Item _items[3] = { EMPTY, BLACK, WHITE };
-    LineItemArray items(_items, 3);
-    EXPECT_EQ_INT(static_cast<int>(EMPTY), static_cast<int>(items[0]));
-    EXPECT_EQ_INT(static_cast<int>(WHITE), static_cast<int>(items[2]));
-    items.Append(NONE_ITEM);
-    EXPECT_EQ_INT(static_cast<int>(NONE_ITEM), static_cast<int>(items[3]));
-}
-
-
 static void TestActionArray()
 {
     Action _actions[3];
