@@ -43,6 +43,17 @@ static void TestConversionOfAction()
 }
 
 
+static void TestItemArray()
+{
+    Item _items[3] = { EMPTY, BLACK, WHITE };
+    LineItemArray items(_items, 3);
+    EXPECT_EQ_INT(static_cast<int>(EMPTY), static_cast<int>(items[0]));
+    EXPECT_EQ_INT(static_cast<int>(WHITE), static_cast<int>(items[2]));
+    items.Append(NONE_ITEM);
+    EXPECT_EQ_INT(static_cast<int>(NONE_ITEM), static_cast<int>(items[3]));
+}
+
+
 static void TestActionArray()
 {
     Action _actions[3];
@@ -57,7 +68,7 @@ static void TestActionArray()
     actions.Append(Action(7, 9));
     EXPECT_EQ_INT(3, actions.Size());
     EXPECT_EQ_INT(static_cast<Uint>(Action(7, 9)), static_cast<Uint>(actions[2]));
-    actions.SetActions(_actions);
+    actions.Set(_actions);
     EXPECT_EQ_INT(static_cast<Uint>(Action(7, 9)), static_cast<Uint>(_actions[2]));
 }
 
@@ -65,6 +76,7 @@ static void TestActionArray()
 static void TestUtils()
 {
     TestConversionOfAction();
+    TestItemArray();
     TestActionArray();
     printf("utils_test: %d/%d (%3.2f%%) passed\n", testPass, testCount, testPass * 100.0 / testCount);
 }

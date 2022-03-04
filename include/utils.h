@@ -40,34 +40,35 @@ inline std::ostream& operator<<(std::ostream& os, const Action& action)
 }
 
 
-// implement action array that scores a set of actions
-template<size_t maxSize>
-class ActionArray
+// implement array that scores a set of elements, e.g., actions
+template<class T, size_t maxSize>
+class Array
 {
     public:
-        ActionArray() {}
-        ActionArray(const Action* acts, size_t s) 
-        { memcpy(actions, acts, (size = s) * sizeof(Action)); }
-        ActionArray& operator=(const ActionArray& array)
+        Array() {}
+        Array(const T* arr, size_t s) 
+        { memcpy(array, arr, (size = s) * sizeof(T)); }
+        Array& operator=(const T& targetArray)
         { 
-            memcpy(actions, array.actions, (size = array.size) * sizeof(Action)); 
+            memcpy(array, targetArray.array, (size = targetArray.size) * sizeof(T)); 
             return *this;
         }
-        ActionArray(const ActionArray& array) { *this = array; }
+        Array(const T& targetArray) { *this = targetArray; }
         size_t Size() const { return size; }
-        void Append(const Action& act) { actions[size++] = act; }
-        const Action& operator[](int i) const { return actions[i]; }
-        void SetActions(Action* handle) { memcpy(handle, actions, size * sizeof(Action)); }
+        void Append(const T& elem) { array[size++] = elem; }
+        const T& operator[](int i) const { return array[i]; }
+        void Set(T* handle) { memcpy(handle, array, size * sizeof(T)); }
+        void Clear() { size = 0; }
 
     private:
-        Action actions[maxSize];
+        T array[maxSize];
         size_t size = 0;
 
 };
 
 
-template<size_t maxSize>
-inline std::ostream& operator<<(std::ostream& os, const ActionArray<maxSize>& array)
+template<class T, size_t maxSize>
+inline std::ostream& operator<<(std::ostream& os, const Array<T, maxSize>& array)
 {
     size_t size = array.Size();
     os << size << " actions:";
@@ -77,7 +78,8 @@ inline std::ostream& operator<<(std::ostream& os, const ActionArray<maxSize>& ar
 }
 
 
-typedef ActionArray<SIZE> LineActionArray;
-typedef ActionArray<NUM_STONES> BoardActionArray;
+typedef Array<Item, SIZE> LineItemArray;
+typedef Array<Action, SIZE> LineActionArray;
+typedef Array<Action, NUM_STONES> BoardActionArray;
 
 #endif
