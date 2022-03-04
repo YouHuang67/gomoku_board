@@ -1,8 +1,10 @@
-#include "../test/utils_test.h"
+// #include "../test/utils_test.h"
+#include "../test/line_test.h"
 
 
 int main(int, char**) 
 {
-    TestUtils();
+    // TestUtils();
+    TestLine();
     return 0;
 }
