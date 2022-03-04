@@ -17,7 +17,7 @@ const Uint SIZE = 15;
 const Uint NUM_STONES = 225;
 enum Item {BLACK = 0, WHITE, EMPTY, NONE_ITEM};
 enum Direction {ROW, COL, DIA, COU};
-enum Shape { FIVE, OPEN_FOUR, FOUR, OPEN_THREE, THREE, OPEN_TWO, TWO };
+enum Shape { OPEN_FOUR = 0, FOUR, OPEN_THREE, THREE, OPEN_TWO, TWO, FIVE };
 
 
 struct Action
