@@ -65,7 +65,6 @@ static void TestActionArray()
 static void TestUtils()
 {
     TestConversionOfAction();
-    TestItemArray();
     TestActionArray();
     printf("utils_test: %d/%d (%3.2f%%) passed\n", testPass, testCount, testPass * 100.0 / testCount);
 }
