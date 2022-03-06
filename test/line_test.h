@@ -74,11 +74,23 @@ void TestLineTable()
 }
 
 
+void TestMeasureLengthOfLine()
+{
+    Item ITEMS[3] = {BLACK, WHITE, EMPTY};
+    LineItemArray items;
+    int n = 12;
+    for (int i = 0; i < n; i++)
+        items.Append(ITEMS[rand() % 3]);
+    EXPECT_EQ_INT(n, LineTable::GetLength(static_cast<Uint32>(items)));
+}
+
+
 static void TestLine()
 {
     TestLineItemArray();
     TestBasicOperatorsOfLine();
     TestLineTable();
+    TestMeasureLengthOfLine();
     printf("line_test: %d/%d (%3.2f%%) passed\n", testPass, testCount, testPass * 100.0 / testCount);
 }
 

@@ -104,6 +104,16 @@ class LineTable : public LineBase
             }
             return static_cast<LineTable*>(*handle)->FindHandle(leftKey);
         }
+        static int GetLength(Uint32 line)
+        {
+            int length = 0;
+            do
+            {
+                length += lineLengths[LINE_MAP_MASK & line];
+                line >>= 2 * LINE_MAP_LENGTH;
+            } while (line);
+            return length;
+        }
 
     private:
         LineBase**  ptr;
