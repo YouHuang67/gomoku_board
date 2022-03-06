@@ -1,8 +1,17 @@
+#include <math.h>
 #include "line.h"
 
 
 LineActionArray* InitializeActionCodingTable();
+int* GetLineLengths(); 
+int* GetLineIndices();
+Uint32* GetLineMasks();
+
+
 LineActionArray* Line::actionCodingTable = InitializeActionCodingTable();
+int*    LineTable::lineLengths = GetLineLengths();
+int*    LineTable::lineIndices = GetLineIndices();
+Uint32* LineTable::lineMasks   = GetLineMasks();
 
 
 LineActionArray* InitializeActionCodingTable()
@@ -12,6 +21,45 @@ LineActionArray* InitializeActionCodingTable()
         for (int pos = 0; pos < SIZE; pos++)
             if ((coding >> pos) & 1) tablePtr[coding].Append(Action(0, pos));
     return tablePtr;
+}
+
+
+int GetLineLength(Uint32 line)
+{
+    int length = 0;
+    LineItemArray items = static_cast<LineItemArray>(line);
+    for (int i = 0; i < SIZE; i++)
+        if (NONE_ITEM != items[i]) 
+            if (length++ < i) return -1;
+    return length;
+}
+
+
+int* GetLineLengths()
+{
+    int* ptr = new int[LINE_MAP_SIZE];
+    for (Uint32 line = 0; line < LINE_MAP_SIZE; line++)
+        ptr[line] = GetLineLength(line);
+    return ptr;
+}
+
+
+int* GetLineIndices()
+{
+    int length, index = 0, *ptr = new int[LINE_MAP_SIZE];
+    for (Uint32 line = 0; line < LINE_MAP_SIZE; line++)
+        if ((length = GetLineLength(line)) >= 0)
+            ptr[line] = index++;
+    return ptr;
+}
+
+
+Uint32* GetLineMasks()
+{
+    Uint32* ptr = new Uint32[SIZE+1];
+    for (int length = 0; length <= SIZE; length++)
+        ptr[length] = (1 << (2 * length)) - 1;
+    return ptr;
 }
 
 

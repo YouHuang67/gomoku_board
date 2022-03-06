@@ -4,6 +4,7 @@
 #include <cstdio>
 #include <cstdlib>
 #include <cstring>
+#include <math.h>
 #include "line.h"
 
 static int mainRet = 0;
@@ -53,10 +54,32 @@ void TestBasicOperatorsOfLine()
 }
 
 
+void TestLineTable()
+{
+    LineTable lineTable(LINE_MAP_SIZE);
+    Item ITEMS[3] = {BLACK, WHITE, EMPTY};
+    for (int length = 0; length <= SIZE; length++)
+    {
+        Uint max = static_cast<Uint>(pow(3, length));
+        for (Uint index = 0; index < max; index++)
+        {
+            LineItemArray items;
+            for (int i = 0; i < length; i++)
+                items.Append(ITEMS[static_cast<int>(index / pow(3, i)) % 3]);
+            Uint32 line = static_cast<Uint32>(items);
+            LineBase** handle = lineTable.FindHandle(line);
+            *handle = new Line(line);
+            EXPECT_EQ_INT(line, static_cast<Line*>(lineTable.Find(line))->GetLine());
+        }
+    }
+}
+
+
 static void TestLine()
 {
     TestLineItemArray();
     TestBasicOperatorsOfLine();
+    TestLineTable();
     printf("line_test: %d/%d (%3.2f%%) passed\n", testPass, testCount, testPass * 100.0 / testCount);
 }
 
