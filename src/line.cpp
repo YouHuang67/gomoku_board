@@ -5,13 +5,12 @@
 LineActionArray* InitializeActionCodingTable();
 int* GetLineLengths(); 
 int* GetLineIndices();
-Uint32* GetLineMasks();
 
 
 LineActionArray* Line::actionCodingTable = InitializeActionCodingTable();
 int*    LineTable::lineLengths = GetLineLengths();
 int*    LineTable::lineIndices = GetLineIndices();
-Uint32* LineTable::lineMasks   = GetLineMasks();
+LineTable LINE_TABLE = *(new LineTable(LINE_MAP_SIZE));
 
 
 LineActionArray* InitializeActionCodingTable()
@@ -50,15 +49,6 @@ int* GetLineIndices()
     for (Uint32 line = 0; line < LINE_MAP_SIZE; line++)
         if ((length = GetLineLength(line)) >= 0)
             ptr[line] = index++;
-    return ptr;
-}
-
-
-Uint32* GetLineMasks()
-{
-    Uint32* ptr = new Uint32[SIZE+1];
-    for (int length = 0; length <= SIZE; length++)
-        ptr[length] = (1 << (2 * length)) - 1;
     return ptr;
 }
 

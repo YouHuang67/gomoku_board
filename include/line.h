@@ -9,6 +9,8 @@ const Uint32 ACTION_CODING_MASK       = (1 << SIZE) - 1;
 const Uint   LINE_MAP_LENGTH          = 10;
 const Uint   LINE_MAP_SIZE            = 1 << (2 * LINE_MAP_LENGTH);
 const Uint32 LINE_MAP_MASK            = LINE_MAP_SIZE - 1;
+class LineTable;
+extern LineTable LINE_TABLE;
 
 
 class LineItemArray : public Array<Item, SIZE>
@@ -60,8 +62,7 @@ class Line : public LineBase
         Uint32 GetLine() const { return line; }
         void SetFive(bool _isFive) { isFive = _isFive; }
         bool IsFive() const { return isFive; }
-        bool GetActions(Shape shape, bool isAttacker, 
-                        LineActionArray* arrayPtr = nullptr) const
+        bool GetActions(Shape shape, bool isAttacker, LineActionArray* arrayPtr = nullptr) const
         {
             Uint32 coding = GetActionCoding(shape, isAttacker);
             if (arrayPtr) *arrayPtr = actionCodingTable[coding];
@@ -95,7 +96,7 @@ class LineTable : public LineBase
             Uint32 mainKey = key & LINE_MAP_MASK;
             Uint32 leftKey = key >> (2 * LINE_MAP_LENGTH);
             LineBase** handle = ptr + lineIndices[mainKey];
-            if (LINE_MAP_LENGTH != lineLengths[mainKey]) return handle;
+            if (LINE_MAP_LENGTH > lineLengths[mainKey]) return handle;
             if (!(*handle))
             {
                 int length = SIZE > 2 * LINE_MAP_LENGTH ? LINE_MAP_LENGTH : SIZE - LINE_MAP_LENGTH;
@@ -105,10 +106,9 @@ class LineTable : public LineBase
         }
 
     private:
-        LineBase**     ptr;
-		static int*    lineLengths;
-        static int*    lineIndices;
-		static Uint32* lineMasks;
+        LineBase**  ptr;
+		static int* lineLengths;
+        static int* lineIndices;
 
 };
 

@@ -56,7 +56,6 @@ void TestBasicOperatorsOfLine()
 
 void TestLineTable()
 {
-    LineTable lineTable(LINE_MAP_SIZE);
     Item ITEMS[3] = {BLACK, WHITE, EMPTY};
     for (int length = 0; length <= SIZE; length++)
     {
@@ -67,9 +66,9 @@ void TestLineTable()
             for (int i = 0; i < length; i++)
                 items.Append(ITEMS[static_cast<int>(index / pow(3, i)) % 3]);
             Uint32 line = static_cast<Uint32>(items);
-            LineBase** handle = lineTable.FindHandle(line);
+            LineBase** handle = LINE_TABLE.FindHandle(line);
             *handle = new Line(line);
-            EXPECT_EQ_INT(line, static_cast<Line*>(lineTable.Find(line))->GetLine());
+            EXPECT_EQ_INT(line, static_cast<Line*>(LINE_TABLE.Find(line))->GetLine());
         }
     }
 }
